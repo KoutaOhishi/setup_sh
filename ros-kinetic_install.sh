@@ -14,7 +14,7 @@ sudo rosdep init
 rosdep update
 
 sudo echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
-sudo echo "alias cm='cd ~/catkin_ws && catkin_make" >> ~/.bashrc
+sudo echo "alias cm='cd ~/catkin_ws && catkin_make'" >> ~/.bashrc
 source ~/.bashrc
 
 sudo apt-get install python-rosinstall python-rosinstall-generator python-wstool build-essential
