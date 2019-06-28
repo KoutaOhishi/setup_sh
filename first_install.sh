@@ -11,3 +11,6 @@ sudo rm -rf /var/crash/*
 #画像編集ソフトのインストール
 sudo apt-get install gimp -y
 sudo apt-get install pinta -y
+
+#"デスクトップ"を"Desktop"に変更する方法
+https://qiita.com/matoken/items/1e43b4f446060f64afa1
