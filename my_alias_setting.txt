@@ -1,0 +1,6 @@
+alias gpa='cd && python git_pull_all/git_pull_all.py'
+
+alias cmd='python ~/chmod_all.py && cd ~/catkin_ws'
+#alias cm='cmd && catkin_make --only-pkg-with-deps'
+alias cm='cmd && catkin_make'
+alias open='xdg-open'
