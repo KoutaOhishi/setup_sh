@@ -1,0 +1,34 @@
+#config
+"*":
+  core:
+    autoHideMenuBar: true
+    closeDeletedFileTabs: true
+    disabledPackages: [
+      "minimap-autohide"
+    ]
+    openEmptyEditorOnStart: false
+    restorePreviousWindowsOnStart: "no"
+    telemetryConsent: "no"
+  editor:
+    fontSize: 15
+    showInvisibles: true
+    softWrap: true
+  "exception-reporting":
+    userId: "5a0c6f3d-6108-448d-9968-86ce65abfab5"
+  "markdown-preview":
+    useGitHubStyle: true
+  "tree-view":
+    hideVcsIgnoredFiles: true
+  welcome:
+    showOnStartup: false
+
+
+#packages
+autocomplete-paths
+file-icons
+highlight-column
+indent-guide-improved
+japanese-menu
+minimap-autohide
+selection-highlight
+
