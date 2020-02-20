@@ -14,3 +14,7 @@ sudo apt-get install pinta -y
 
 #"デスクトップ"を"Desktop"に変更する方法
 https://qiita.com/matoken/items/1e43b4f446060f64afa1
+
+#macのキーボードをubuntuでも使えるように設定する
+https://www.karelie.nethttps://qiita.com/yas-nyan/items/55e764304c67736ff9ba/customize-keyboard-for-macuser/#toc_-2
+
