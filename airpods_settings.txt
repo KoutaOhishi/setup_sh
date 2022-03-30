@@ -1,0 +1,89 @@
+https://hirooka.pro/airpods-pro-ubuntu-20-04/
+
+/etc/bluetooth/main.confのControllerModeをbredrにする
+#ControllerMode = dual
+ControllerMode = bredr
+
+sudo systemctl restart bluetooth
+
+
+https://hirooka.pro/airpods-pro-mic-ubuntu-20-04/
+
+sudo apt install ofono
+
+設定ファイル /etc/pulse/default.pa の特定の 1 行をコメント化し、新たに 1 行を下記のように追記します。
+#load-module module-bluetooth-discover
+load-module module-bluetooth-discover headset=ofono
+
+ユーザー pulse を bluetooth グループに追加します。
+sudo usermod -aG bluetooth pulse
+
+設定ファイル /etc/dbus-1/system.d/ofono.conf の busconfig の 1 階層下に下記の 3 行を追記します。
+<policy user="pulse">
+  <allow send_destination="org.ofono"/>
+</policy>
+
+ofono-phonesim をインストールします。
+sudo add-apt-repository ppa:smoser/bluetooth
+sudo apt update
+sudo apt install ofono-phonesim
+
+設定ファイル /etc/ofono/phonesim.conf 下記の 4 行を追記します。
+[phonesim]
+Driver=phonesim
+Address=127.0.0.1
+Port=12345
+
+ofono サービスを再起動します。
+sudo systemctl restart ofono
+
+ofono-phonesim の Systemd のユニットファイル /etc/systemd/system/ofono-phonesim.service を作成します。
+
+[Unit]
+Description=Run ofono-phonesim in the background
+
+[Service]
+ExecStart=ofono-phonesim -p 12345 /usr/share/phonesim/default.xml
+Type=simple
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+
+
+oFono のソースコードをクローンし、適当なパスに配置します。
+
+cd /tmp
+git clone git://git.kernel.org/pub/scm/network/ofono/ofono.git
+cd ofono
+git checkout b3682c6bab99cbe301fa9bf4a2416c3f730d8bfd
+cd ..
+sudo mv ofono /opt/
+
+phonesim の Systemd のユニットファイ /etc/systemd/system/phonesim-enable-modem.service を作成します
+
+[Unit]
+Description=Enable and online phonesim modem
+Requires=ofono-phonesim.service
+
+[Service]
+ExecStart=/opt/ofono/test/enable-modem /phonesim
+ExecStart=/opt/ofono/test/online-modem /phonesim
+Type=oneshot
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+
+
+
+作成したサービスの自動起動を有効にし、スタートします。
+
+sudo systemctl daemon-reload
+sudo systemctl enable ofono-phonesim
+sudo systemctl enable phonesim-enable-modem
+sudo systemctl start ofono-phonesim
+sudo systemctl start phonesim-enable-modem
+
+下記のコマンドを実行すると、Settings の Sound の Input の Input Device に AirPods Pro が表示されるようになります。AirPods Pro を装着したまま何か音を発してみるとインジケータが反応します。
+pulseaudio -k
